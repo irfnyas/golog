@@ -1,3 +1,8 @@
+## 0.0.3
+
+* Set GologWidget() to public access
+* Update documentation
+
 ## 0.0.2+1
 
 * Update documentation

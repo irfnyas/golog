@@ -16,12 +16,20 @@ class Golog {
   static final _logOpened = ValueNotifier(0);
   static final _isExpanded = ValueNotifier(false);
 
-  /// Golog material app builder
+  /// Golog material app builder.
+  ///
+  /// ```
+  /// // Example
+  /// return MaterialApp(
+  ///   builder: Golog.builder(),
+  /// )
+  /// ```
+  ///
   static Widget Function(BuildContext, Widget?)? builder() {
-    return (context, child) => _GologWidget(context: context, child: child);
+    return (context, child) => GologWidget(context: context, child: child);
   }
 
-  /// Add new log
+  /// Add new log.
   static void add(String title, {String? body}) {
     Golog._logList.insert(0, GologModel(title: title, body: body));
     Golog._logLength.value = Golog._logList.length;
@@ -34,7 +42,7 @@ class Golog {
   }
 }
 
-// Golog custom model
+// Golog custom model.
 class GologModel {
   GologModel({
     required this.title,
@@ -61,11 +69,30 @@ class GologModel {
   }
 }
 
-class _GologWidget extends StatelessWidget {
-  const _GologWidget({
+/// Alternative if you are not using Golog.builder().
+/// Wrap your child widget inside material app using GologWidget().
+///
+/// ```
+/// // Example
+/// return MaterialApp(
+///   builder: (BuildContext context, Widget? child) {
+///     return GologWidget(
+///       context: context,
+///       child: MediaQuery(
+///         data: MediaQuery.of(context),
+///         child: child ?? const SizedBox(),
+///       ),
+///     );
+///   }
+/// )
+/// ```
+///
+class GologWidget extends StatelessWidget {
+  const GologWidget({
+    Key? key,
     required this.context,
     this.child,
-  });
+  }) : super(key: key);
 
   final BuildContext context;
   final Widget? child;

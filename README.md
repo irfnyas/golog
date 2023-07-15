@@ -20,7 +20,7 @@ and the Flutter guide for
 	<a href="https://github.com/irfnyas/golog"><img src="https://img.shields.io/badge/platform-flutter-ff69b4.svg" alt="Flutter Platform Badge"></a>
 </p>
 
-View custom logger inside app. Works on debug and release.
+View custom logger inside app. Works on debug and release mode.
 
 ## Features
 
@@ -35,7 +35,7 @@ flutter pub add golog
 
 ## Usage
 
-- Add ```Golog.builder()``` to your MaterialApp:
+- Add ```Golog.builder()``` to your MaterialApp.builder:
 
 ```dart
 class MyApp extends StatelessWidget {
@@ -50,13 +50,29 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-- Send your custom log using:
+- Alternatively, if you are not using ```Golog.builder()``` you can wrap your child widget inside MaterialApp.builder using ```GologWidget()```:
+
+```dart
+return MaterialApp(
+  builder: (BuildContext context, Widget? child) {
+    return GologWidget(
+      context: context,
+      child: MediaQuery(
+        data: MediaQuery.of(context),
+        child: child ?? const SizedBox(),
+      ),
+    );
+  }
+)
+```
+
+- Send your custom log:
 
 ```dart
 Golog.add('my log title', body: '{"hello":"this body is optional"}');
 ```
 
-- Get log list using:
+- Get log list:
 
 ```dart
 Golog.list();
