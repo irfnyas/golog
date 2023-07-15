@@ -1,4 +1,8 @@
-## 0.0.4
+## 0.0.5+1
+
+* Update Changelog
+
+## 0.0.5
 
 * Update the GologWidget()
 * Changed body from String? to Map<String, dynamic>?
