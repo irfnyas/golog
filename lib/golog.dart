@@ -30,7 +30,7 @@ class Golog {
   }
 
   /// Add new log.
-  static void add(String title, {String? body}) {
+  static void add(String title, {Map<String, dynamic>? body}) {
     Golog._logList.insert(0, GologModel(title: title, body: body));
     Golog._logLength.value = Golog._logList.length;
     Golog._logOpened.value = 0;
@@ -51,7 +51,7 @@ class GologModel {
 
   final String title;
   final createdAt = '${DateTime.now()}';
-  final String? body;
+  final Map<String, dynamic>? body;
 
   Map<String, dynamic> toJson() => {
         'title': title,
@@ -117,6 +117,7 @@ class GologWidget extends StatelessWidget {
               child: Expanded(
                 child: Scaffold(
                   appBar: AppBar(title: const Text('Log Viewer')),
+                  backgroundColor: Theme.of(context).cardColor,
                   body: ValueListenableBuilder(
                     valueListenable: Golog._logOpened,
                     builder: (_, int logOpened, __) => ListView.separated(
@@ -173,28 +174,49 @@ class GologWidget extends StatelessWidget {
                             visible: e.body != null && logOpened == i,
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 16),
-                              child: Text(
-                                e.body ?? '',
-                                style: const TextStyle(
-                                  height: 1.5,
-                                  fontFamily: 'FiraCode',
-                                  package: 'golog',
-                                ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: e.body?.length ?? 0,
+                                itemBuilder: (_, i) {
+                                  final f = e.body?.entries.elementAt(i);
+                                  return RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: '${f?.key}:\n',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '${f?.value}\n',
+                                        ),
+                                      ],
+                                      style: TextStyle(
+                                        height: 1.5,
+                                        fontFamily: 'FiraCode',
+                                        package: 'golog',
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.color,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
                           onTap: () =>
                               Golog._logOpened.value = logOpened == i ? -1 : i,
                           onLongPress: () {
-                            Clipboard.setData(
-                              ClipboardData(text: '$e'),
-                            );
+                            Clipboard.setData(ClipboardData(text: '$e'));
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text(
                                   'Value copied to clipboard!',
                                 ),
-                                showCloseIcon: true,
                                 backgroundColor: Theme.of(context).primaryColor,
                               ),
                             );

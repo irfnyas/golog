@@ -1,6 +1,11 @@
 ## 0.0.4
 
 * Update the GologWidget()
+* Changed body from String? to Map<String, dynamic>?
+
+## 0.0.4
+
+* Update the GologWidget()
 * Changed copy function from tap to long press
 
 ## 0.0.3

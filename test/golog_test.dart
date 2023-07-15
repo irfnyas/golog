@@ -4,7 +4,7 @@ import 'package:golog/golog.dart';
 void main() {
   test('add new log', () {
     const title = 'Log Test';
-    const body = '{"hello": "world"}';
+    const body = {'hello': 'world'};
 
     Golog.add(title, body: body);
 
