@@ -36,6 +36,7 @@ flutter pub add golog
 ## Usage
 
 - Add ```Golog.builder()``` to your MaterialApp:
+
 ```dart
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -50,8 +51,15 @@ class MyApp extends StatelessWidget {
 ```
 
 - Send your custom log using:
+
 ```dart
 Golog.add('my log title', body: '{"hello":"this body is optional"}');
+```
+
+- Get log list using:
+
+```dart
+Golog.list();
 ```
 
 - Tap item to see the body, tap again to copy its value to clipboard.
