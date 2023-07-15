@@ -1,11 +1,7 @@
-## 0.0.2+2
-
-* Update license
-
 ## 0.0.2+1
 
 * Update documentation
-
+* Update license
 
 ## 0.0.2
 
