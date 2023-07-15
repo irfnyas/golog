@@ -8,8 +8,8 @@ void main() {
 
     Golog.add(title, body: body);
 
-    expect(Golog.logLength.value, 1);
-    expect(Golog.logList.first.title, title);
-    expect(Golog.logList.first.body, body);
+    expect(Golog.list().length, 1);
+    expect(Golog.list().first.title, title);
+    expect(Golog.list().first.body, body);
   });
 }

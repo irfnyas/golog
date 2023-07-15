@@ -11,22 +11,30 @@ class Golog {
   factory Golog() => _instance;
   Golog._();
 
-  static final logList = <GologModel>[];
-  static final logLength = ValueNotifier(0);
-  static final logOpened = ValueNotifier(0);
-  static final isExpanded = ValueNotifier(false);
+  static final _logList = <GologModel>[];
+  static final _logLength = ValueNotifier(0);
+  static final _logOpened = ValueNotifier(0);
+  static final _isExpanded = ValueNotifier(false);
 
+  /// Golog material app builder
   static Widget Function(BuildContext, Widget?)? builder() {
     return (context, child) => _GologWidget(context: context, child: child);
   }
 
+  /// Add new log
   static void add(String title, {String? body}) {
-    Golog.logList.insert(0, GologModel(title: title, body: body));
-    Golog.logLength.value = Golog.logList.length;
-    Golog.logOpened.value = 0;
+    Golog._logList.insert(0, GologModel(title: title, body: body));
+    Golog._logLength.value = Golog._logList.length;
+    Golog._logOpened.value = 0;
+  }
+
+  /// Get log list
+  static List<GologModel> list() {
+    return _logList;
   }
 }
 
+// Golog custom model
 class GologModel {
   GologModel({
     required this.title,
@@ -66,7 +74,7 @@ class _GologWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: ValueListenableBuilder(
-        valueListenable: Golog.isExpanded,
+        valueListenable: Golog._isExpanded,
         builder: (context, bool isExpanded, __) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -75,16 +83,16 @@ class _GologWidget extends StatelessWidget {
                   ? (child ?? const SizedBox.shrink())
                   : SafeArea(
                       child: ValueListenableBuilder(
-                        valueListenable: Golog.logOpened,
+                        valueListenable: Golog._logOpened,
                         builder: (_, int logOpened, __) => ListView.separated(
-                          itemCount: Golog.logLength.value,
+                          itemCount: Golog._logLength.value,
                           physics: const BouncingScrollPhysics(),
                           separatorBuilder: (_, __) => const Divider(
                             height: 1,
                             thickness: 1,
                           ),
                           itemBuilder: (_, i) {
-                            final e = Golog.logList[i];
+                            final e = Golog._logList[i];
                             return ListTile(
                               tileColor: logOpened == i
                                   ? Theme.of(context)
@@ -141,7 +149,7 @@ class _GologWidget extends StatelessWidget {
                               ),
                               onTap: () => logOpened == i
                                   ? Clipboard.setData(ClipboardData(text: '$e'))
-                                  : Golog.logOpened.value = i,
+                                  : Golog._logOpened.value = i,
                             );
                           },
                         ),
@@ -153,7 +161,7 @@ class _GologWidget extends StatelessWidget {
               thickness: 1,
             ),
             InkWell(
-              onTap: () => Golog.isExpanded.value = !Golog.isExpanded.value,
+              onTap: () => Golog._isExpanded.value = !Golog._isExpanded.value,
               child: Container(
                 height: kTextTabBarHeight,
                 padding: const EdgeInsets.symmetric(
@@ -163,9 +171,9 @@ class _GologWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ValueListenableBuilder(
-                        valueListenable: Golog.logLength,
+                        valueListenable: Golog._logLength,
                         builder: (_, int i, __) => Text(
-                          i == 0 ? 'Log View' : Golog.logList.first.title,
+                          i == 0 ? 'Log View' : Golog._logList.first.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelLarge,
@@ -175,7 +183,7 @@ class _GologWidget extends StatelessWidget {
                     const SizedBox(width: 16),
                     Switch(
                       value: isExpanded,
-                      onChanged: (v) => Golog.isExpanded.value = v,
+                      onChanged: (v) => Golog._isExpanded.value = v,
                     )
                   ],
                 ),
