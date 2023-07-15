@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() => _counter++);
-    Golog.add('#$_counter lorem ipsum dolor sit amet');
+    Golog.add('Log Title #$_counter', body: '{"hello":"world"}');
   }
 
   @override
