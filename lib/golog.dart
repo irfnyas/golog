@@ -67,7 +67,7 @@ class _GologWidget extends StatelessWidget {
     return Material(
       child: ValueListenableBuilder(
         valueListenable: Golog.isExpanded,
-        builder: (context, isExpanded, __) => Column(
+        builder: (context, bool isExpanded, __) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
@@ -76,7 +76,7 @@ class _GologWidget extends StatelessWidget {
                   : SafeArea(
                       child: ValueListenableBuilder(
                         valueListenable: Golog.logOpened,
-                        builder: (_, logOpened, __) => ListView.separated(
+                        builder: (_, int logOpened, __) => ListView.separated(
                           itemCount: Golog.logLength.value,
                           physics: const BouncingScrollPhysics(),
                           separatorBuilder: (_, __) => const Divider(
@@ -164,7 +164,7 @@ class _GologWidget extends StatelessWidget {
                     Expanded(
                       child: ValueListenableBuilder(
                         valueListenable: Golog.logLength,
-                        builder: (_, i, __) => Text(
+                        builder: (_, int i, __) => Text(
                           i == 0 ? 'Log View' : Golog.logList.first.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
