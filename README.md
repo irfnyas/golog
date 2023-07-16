@@ -25,7 +25,7 @@ View custom logger inside app. Works on debug and release mode.
 ## Features
 
 <img src="https://github.com/irfnyas/golog/assets/34657831/7ce67ba6-b39c-4eda-bb01-00fca865f191" alt="Screenshot 1" width="300">
-<img src="https://github.com/irfnyas/golog/assets/34657831/2ef37092-f600-4568-a66b-f1553fef67cd" alt="Screenshot 2" width="300">
+<img src="https://github.com/irfnyas/golog/assets/34657831/c49446e5-e3a3-408a-96ae-325bb689ca43" alt="Screenshot 2" width="300">
 
 ## Getting started
 
