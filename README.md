@@ -69,7 +69,7 @@ return MaterialApp(
 - Send your custom log:
 
 ```dart
-Golog.add('my log title', body: '{"hello":"this body is optional"}');
+Golog.add('Log Title', body: {'hello': 'world', 'foo': 123});
 ```
 
 - Get log list:

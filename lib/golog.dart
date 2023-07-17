@@ -40,6 +40,13 @@ class Golog {
   static List<GologModel> list() {
     return _logList;
   }
+
+  /// Clear log list
+  static void _clear() {
+    _logList.clear();
+    _logLength.value = 0;
+    _logOpened.value = -1;
+  }
 }
 
 // Golog custom model.
@@ -50,7 +57,7 @@ class GologModel {
   });
 
   final String title;
-  final createdAt = '${DateTime.now()}';
+  final createdAt = '${DateTime.now()}'.substring(0, 19);
   final Map<String, dynamic>? body;
 
   Map<String, dynamic> toJson() => {
@@ -116,7 +123,15 @@ class GologWidget extends StatelessWidget {
               visible: isExpanded,
               child: Expanded(
                 child: Scaffold(
-                  appBar: AppBar(title: const Text('Log Viewer')),
+                  appBar: AppBar(
+                    title: const Text('Log Viewer'),
+                    actions: [
+                      IconButton(
+                        onPressed: () => Golog._clear(),
+                        icon: const Icon(Icons.delete_outline),
+                      )
+                    ],
+                  ),
                   backgroundColor: Theme.of(context).cardColor,
                   body: ValueListenableBuilder(
                     valueListenable: Golog._logOpened,

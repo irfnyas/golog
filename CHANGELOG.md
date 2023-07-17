@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Add clear button
+
 ## 0.0.5+1
 
 * Update Changelog
@@ -5,12 +9,12 @@
 ## 0.0.5
 
 * Update the GologWidget()
-* Changed body from String? to Map<String, dynamic>?
+* Change body from String? to Map<String, dynamic>?
 
 ## 0.0.4
 
 * Update the GologWidget()
-* Changed copy function from tap to long press
+* Change copy function from tap to long press
 
 ## 0.0.3
 
