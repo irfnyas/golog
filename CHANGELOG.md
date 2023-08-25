@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Fix clear button not clearing list if no log is opened
+
 ## 0.0.6
 
 * Add clear button

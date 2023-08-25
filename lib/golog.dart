@@ -43,6 +43,7 @@ class Golog {
 
   /// Clear log list
   static void _clear() {
+    _logOpened.value = 0;
     _logList.clear();
     _logLength.value = 0;
     _logOpened.value = -1;
