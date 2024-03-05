@@ -1,3 +1,8 @@
+## 0.0.8
+
+* Fix app theme overriding golog theme
+* Update example to have different theme from golog theme
+
 ## 0.0.7
 
 * Fix clear button not clearing list if no log is opened
