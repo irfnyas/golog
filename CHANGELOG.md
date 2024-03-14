@@ -1,3 +1,7 @@
+## 0.0.9
+
+* Fix golog theme overriding app theme
+
 ## 0.0.8
 
 * Fix app theme overriding golog theme

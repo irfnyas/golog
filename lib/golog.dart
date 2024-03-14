@@ -105,23 +105,23 @@ class GologWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(useMaterial3: true),
-      child: Material(
-        color: Colors.transparent,
-        child: ValueListenableBuilder(
-          valueListenable: Golog._isExpanded,
-          builder: (_, bool isExpanded, __) => Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                flex: isExpanded ? 0 : 1,
-                child: SizedBox(
-                  height: isExpanded ? 0 : null,
-                  child: child ?? const SizedBox.shrink(),
-                ),
+    return Material(
+      color: Colors.transparent,
+      child: ValueListenableBuilder(
+        valueListenable: Golog._isExpanded,
+        builder: (_, bool isExpanded, __) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              flex: isExpanded ? 0 : 1,
+              child: SizedBox(
+                height: isExpanded ? 0 : null,
+                child: child ?? const SizedBox.shrink(),
               ),
-              Visibility(
+            ),
+            Theme(
+              data: ThemeData(useMaterial3: true),
+              child: Visibility(
                 visible: isExpanded,
                 child: Expanded(
                   child: Scaffold(
@@ -248,11 +248,17 @@ class GologWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(
+            ),
+            Theme(
+              data: ThemeData(useMaterial3: true),
+              child: const Divider(
                 height: 1,
                 thickness: 1,
               ),
-              InkWell(
+            ),
+            Theme(
+              data: ThemeData(useMaterial3: true),
+              child: InkWell(
                 onTap: () => Golog._isExpanded.value = !Golog._isExpanded.value,
                 child: Container(
                   height: kTextTabBarHeight,
@@ -282,8 +288,8 @@ class GologWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
