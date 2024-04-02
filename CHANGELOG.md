@@ -1,3 +1,8 @@
+## 0.1.0
+
+* Hide arrow icon when body is empty
+* update flutter_lints to 3.0.2
+
 ## 0.0.9
 
 * Fix golog theme overriding app theme

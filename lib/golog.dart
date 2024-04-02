@@ -126,11 +126,20 @@ class GologWidget extends StatelessWidget {
                 child: Expanded(
                   child: Scaffold(
                     appBar: AppBar(
-                      title: const Text('Log Viewer'),
+                      title: Text(
+                        'Log Viewer',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.grey.shade900,
+                        ),
+                      ),
                       actions: [
                         IconButton(
                           onPressed: () => Golog._clear(),
-                          icon: const Icon(Icons.delete_outline),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: Colors.grey.shade900,
+                          ),
                         )
                       ],
                     ),
@@ -162,29 +171,35 @@ class GologWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                       children: [
-                                        Text(e.title),
+                                        Text(
+                                          e.title,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey.shade900,
+                                          ),
+                                        ),
                                         const SizedBox(height: 4),
                                         Text(
                                           e.createdAt,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall
-                                              ?.copyWith(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall
-                                                    ?.color
-                                                    ?.withOpacity(0.5),
-                                              ),
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
-                                  Icon(
-                                    logOpened == i
-                                        ? Icons.keyboard_arrow_up
-                                        : Icons.keyboard_arrow_down,
+                                  Visibility(
+                                    visible: e.body?.isNotEmpty == true,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 16),
+                                      child: Icon(
+                                        logOpened == i
+                                            ? Icons.keyboard_arrow_up
+                                            : Icons.keyboard_arrow_down,
+                                        color: Colors.grey.shade900,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -216,10 +231,7 @@ class GologWidget extends StatelessWidget {
                                           height: 1.5,
                                           fontFamily: 'FiraCode',
                                           package: 'golog',
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.color,
+                                          color: Colors.grey.shade900,
                                         ),
                                       ),
                                     );
@@ -275,7 +287,7 @@ class GologWidget extends StatelessWidget {
                             i == 0 ? 'Log View' : Golog._logList.first.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelLarge,
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                       ),

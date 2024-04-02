@@ -1,6 +1,6 @@
 name: golog
 description: View custom logger inside app. Works on debug and release mode.
-version: 0.0.9
+version: 0.1.0
 homepage: https://github.com/irfnyas/golog
 
 environment:
@@ -14,7 +14,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^3.0.2
 
 flutter:
   fonts:
