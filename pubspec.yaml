@@ -1,6 +1,6 @@
 name: golog
 description: View custom logger inside app. Works on debug and release mode.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/irfnyas/golog
 
 environment:

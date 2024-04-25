@@ -1,3 +1,7 @@
+## 0.1.1
+
+* Fix text color of overview still following app theme
+
 ## 0.1.0
 
 * Hide arrow icon when body is empty

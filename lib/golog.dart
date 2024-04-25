@@ -287,7 +287,10 @@ class GologWidget extends StatelessWidget {
                             i == 0 ? 'Log View' : Golog._logList.first.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14),
+                            style: TextStyle(
+                              color: Colors.grey.shade900,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),
