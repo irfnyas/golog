@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Add WidgetsBinding.instance.addPostFrameCallback to Golog.add(...)
+
 ## 0.1.1
 
 * Fix text color of overview still following app theme

@@ -31,9 +31,11 @@ class Golog {
 
   /// Add new log
   static void add(String title, {Map<String, dynamic>? body}) {
-    Golog._logList.insert(0, GologModel(title: title, body: body));
-    Golog._logLength.value = Golog._logList.length;
-    Golog._logOpened.value = 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Golog._logList.insert(0, GologModel(title: title, body: body));
+      Golog._logLength.value = Golog._logList.length;
+      Golog._logOpened.value = 0;
+    });
   }
 
   /// Get log list
