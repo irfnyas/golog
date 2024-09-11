@@ -1,6 +1,15 @@
+# Changelog
+
+## 0.1.3
+
+* Refactor expand method
+* Improve copy to clipboard value
+* Update example
+
 ## 0.1.2
 
 * Add WidgetsBinding.instance.addPostFrameCallback to Golog.add(...)
+* Update flutter_lints to 4.0.0
 
 ## 0.1.1
 
@@ -9,7 +18,7 @@
 ## 0.1.0
 
 * Hide arrow icon when body is empty
-* update flutter_lints to 3.0.2
+* Update flutter_lints to 3.0.2
 
 ## 0.0.9
 

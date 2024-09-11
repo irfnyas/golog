@@ -75,6 +75,19 @@ class GologModel {
         'createdAt': createdAt,
         'body': body,
       });
+
+  static String prettyJson(String json) {
+    try {
+      const decoder = JsonDecoder();
+      const encoder = JsonEncoder.withIndent('  ');
+      final object = decoder.convert(json);
+      final pretty = encoder.convert(object);
+
+      return pretty;
+    } catch (e) {
+      return json;
+    }
+  }
 }
 
 /// Alternative if you are not using Golog.builder().
@@ -112,162 +125,168 @@ class GologWidget extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: Golog._isExpanded,
         builder: (_, bool isExpanded, __) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Flexible(
-              flex: isExpanded ? 0 : 1,
-              child: SizedBox(
-                height: isExpanded ? 0 : null,
-                child: child ?? const SizedBox.shrink(),
-              ),
-            ),
-            Theme(
-              data: ThemeData(useMaterial3: true),
-              child: Visibility(
-                visible: isExpanded,
-                child: Expanded(
-                  child: Scaffold(
-                    appBar: AppBar(
-                      title: Text(
-                        'Log Viewer',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.grey.shade900,
-                        ),
-                      ),
-                      actions: [
-                        IconButton(
-                          onPressed: () => Golog._clear(),
-                          icon: Icon(
-                            Icons.delete_outline,
-                            color: Colors.grey.shade900,
+            Expanded(
+              child: Stack(
+                children: [
+                  child ?? const SizedBox.shrink(),
+                  Visibility(
+                    visible: isExpanded,
+                    child: Theme(
+                      data: ThemeData(useMaterial3: true),
+                      child: Visibility(
+                        visible: isExpanded,
+                        child: Scaffold(
+                          appBar: AppBar(
+                            title: Text(
+                              'Log Viewer',
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.grey.shade900,
+                              ),
+                            ),
+                            actions: [
+                              IconButton(
+                                onPressed: () => Golog._clear(),
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.grey.shade900,
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                    backgroundColor: Theme.of(context).cardColor,
-                    body: ValueListenableBuilder(
-                      valueListenable: Golog._logOpened,
-                      builder: (_, int logOpened, __) => ListView.separated(
-                        itemCount: Golog._logLength.value,
-                        physics: const BouncingScrollPhysics(),
-                        separatorBuilder: (_, __) => const Divider(
-                          height: 1,
-                          thickness: 1,
-                        ),
-                        itemBuilder: (_, i) {
-                          final e = Golog._logList[i];
-                          return ListTile(
-                            tileColor: logOpened == i
-                                ? Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.05)
-                                : null,
-                            minVerticalPadding: 0,
-                            title: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
+                          backgroundColor: Theme.of(context).cardColor,
+                          body: ValueListenableBuilder(
+                            valueListenable: Golog._logOpened,
+                            builder: (_, int logOpened, __) =>
+                                ListView.separated(
+                              itemCount: Golog._logLength.value,
+                              physics: const BouncingScrollPhysics(),
+                              separatorBuilder: (_, __) => const Divider(
+                                height: 1,
+                                thickness: 1,
+                              ),
+                              itemBuilder: (_, i) {
+                                final e = Golog._logList[i];
+                                return ListTile(
+                                  tileColor: logOpened == i
+                                      ? Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.05)
+                                      : null,
+                                  minVerticalPadding: 0,
+                                  title: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                    ),
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          e.title,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey.shade900,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Text(
+                                                e.title,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.grey.shade900,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                e.createdAt,
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          e.createdAt,
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey,
+                                        Visibility(
+                                          visible: e.body?.isNotEmpty == true,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 16,
+                                            ),
+                                            child: Icon(
+                                              logOpened == i
+                                                  ? Icons.keyboard_arrow_up
+                                                  : Icons.keyboard_arrow_down,
+                                              color: Colors.grey.shade900,
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Visibility(
-                                    visible: e.body?.isNotEmpty == true,
+                                  subtitle: Visibility(
+                                    visible: e.body != null && logOpened == i,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 16),
-                                      child: Icon(
-                                        logOpened == i
-                                            ? Icons.keyboard_arrow_up
-                                            : Icons.keyboard_arrow_down,
-                                        color: Colors.grey.shade900,
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16),
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: e.body?.length ?? 0,
+                                        itemBuilder: (_, i) {
+                                          final f =
+                                              e.body?.entries.elementAt(i);
+                                          return RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: '${f?.key}:\n',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: f?.value is Map
+                                                      ? GologModel.prettyJson(
+                                                          jsonEncode(f?.value),
+                                                        )
+                                                      : '${f?.value}\n',
+                                                ),
+                                              ],
+                                              style: TextStyle(
+                                                height: 1.5,
+                                                fontFamily: 'FiraCode',
+                                                package: 'golog',
+                                                color: Colors.grey.shade900,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            subtitle: Visibility(
-                              visible: e.body != null && logOpened == i,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: e.body?.length ?? 0,
-                                  itemBuilder: (_, i) {
-                                    final f = e.body?.entries.elementAt(i);
-                                    return RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: '${f?.key}:\n',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: '${f?.value}\n',
-                                          ),
-                                        ],
-                                        style: TextStyle(
-                                          height: 1.5,
-                                          fontFamily: 'FiraCode',
-                                          package: 'golog',
-                                          color: Colors.grey.shade900,
+                                  onTap: () => Golog._logOpened.value =
+                                      logOpened == i ? -1 : i,
+                                  onLongPress: () {
+                                    Clipboard.setData(
+                                        ClipboardData(text: '$e'));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Text(
+                                          'Value copied to clipboard!',
                                         ),
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
                                       ),
                                     );
                                   },
-                                ),
-                              ),
+                                );
+                              },
                             ),
-                            onTap: () => Golog._logOpened.value =
-                                logOpened == i ? -1 : i,
-                            onLongPress: () {
-                              Clipboard.setData(ClipboardData(text: '$e'));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    'Value copied to clipboard!',
-                                  ),
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                ),
-                              );
-                            },
-                          );
-                        },
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Theme(
-              data: ThemeData(useMaterial3: true),
-              child: const Divider(
-                height: 1,
-                thickness: 1,
+                ],
               ),
             ),
             Theme(
@@ -276,9 +295,14 @@ class GologWidget extends StatelessWidget {
                 onTap: () => Golog._isExpanded.value = !Golog._isExpanded.value,
                 child: Container(
                   height: kTextTabBarHeight,
-                  color: Theme.of(context).cardColor,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    border: Border(
+                      top: BorderSide(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                    ),
                   ),
                   child: Row(
                     children: [
